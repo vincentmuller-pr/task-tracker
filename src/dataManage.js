@@ -21,7 +21,7 @@ async function read_file(){
 async function save_file(content){
     await exist_file();
     
-    const data = JSON.stringify(content);
+    const data = JSON.stringify(content, null, 2);
     await fs.writeFile(path, data, "utf-8");
 }
 

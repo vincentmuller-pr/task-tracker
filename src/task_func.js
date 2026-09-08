@@ -34,6 +34,7 @@ async function add_task(desc){
     };
     task_obj_list.push(task);
     await save_file(task_obj_list);
+    console.log(`La tarea ha sido creado con ID: ${id}`)
 }
 
 async function update_task(id, desc){
