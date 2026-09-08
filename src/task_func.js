@@ -6,7 +6,8 @@ function find_next_id(task_obj_list){
     if (task_obj_list.length === 0) {id = 1}
     else {
         for (obj of task_obj_list){
-            (id < obj.id ? id = obj.id+1 : null)
+            console.log(id, obj.id);
+            (id <= obj.id ? id = obj.id+1 : null)
         }
     }
     return id;
