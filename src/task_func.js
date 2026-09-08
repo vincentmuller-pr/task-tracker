@@ -47,4 +47,18 @@ async function update_task(id, desc){
     console.log(`La tarea con ID: ${id} ha sido actualizada con exito.`)
 }
 
-module.exports = {add_task, update_task}
+async function list_tasks(filter="none"){
+    const task_obj_list = await read_file();
+    //Filtro
+    switch (filter) {
+        case "none":
+            break
+    }
+    //Print
+    for (obj of task_obj_list) {
+        //console.log(obj)
+        console.log(`id: ${obj.id} | estado: ${obj.status} | ${obj.description} | Creado: ${obj.createdAt}`)
+    }
+}
+
+module.exports = {add_task, update_task, list_tasks}

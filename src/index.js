@@ -1,6 +1,6 @@
 const command = process.argv[2]
 const args = process.argv.slice(3)
-const {add_task, update_task} = require("./task_func.js");
+const {add_task, update_task, list_tasks} = require("./task_func.js");
 
 function check_arg_fail(arg, type){
     return ((arg === undefined) || (typeof arg !== type))
@@ -26,7 +26,8 @@ switch (command) {
     
     // Mostrar lista de tareas, posible filtro
     case "list":
-        //list_tasks
+        list_tasks();
+        break
     
     default:
         console.log("Comando incorrecto.")
