@@ -1,31 +1,49 @@
 // Aqui se definen las funciones de la APP
 const {read_file, save_file} = require("./dataManage.js");
 
-function find_next_id(taskObjList){
+function find_next_id(task_obj_list){
     let id = 0
-    if (taskObjList.length === 0) {id = 1}
+    if (task_obj_list.length === 0) {id = 1}
     else {
-        for (obj of taskObjList){
+        for (obj of task_obj_list){
             (id < obj.id ? id = obj.id+1 : null)
         }
     }
     return id;
 }
 
+function find_by_id(task_obj_list, id){
+    let task_pos = null;
+    for (let i = 0; i < task_obj_list.length; i++){
+        if (task_obj_list[i].id.toString() === id.toString()) {task_pos = i; break;}
+    }
+    return task_pos;
+}
+
 async function add_task(desc){
-    const taskObjList = await read_file();
-    const id = find_next_id(taskObjList);
-    const dateNow = new Date();
+    const task_obj_list = await read_file();
+    const id = find_next_id(task_obj_list);
+    const date_now = new Date();
     
     const task = {
         id,
         description: desc,
         status: "todo",
-        createdAt: dateNow,
-        updatedAt: dateNow
+        createdAt: date_now,
+        updatedAt: date_now
     };
-    taskObjList.push(task);
-    await save_file(taskObjList);
+    task_obj_list.push(task);
+    await save_file(task_obj_list);
 }
 
-module.exports = {add_task}
+async function update_task(id, desc){
+    const task_obj_list = await read_file();
+    const task_pos = find_by_id(task_obj_list, id);
+    if (task_pos === null) {console.log(`Error: No se encontro una tarea con ID: ${id}.`); return}
+    task_obj_list[task_pos].description = desc;
+    task_obj_list[task_pos].updatedAt = new Date();
+    await save_file(task_obj_list)
+    console.log(`La tarea con ID: ${id} ha sido actualizada con exito.`)
+}
+
+module.exports = {add_task, update_task}

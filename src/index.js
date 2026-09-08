@@ -1,7 +1,10 @@
 const command = process.argv[2]
 const args = process.argv.slice(3)
-//console.log(command, args)
-const {add_task} = require("./task_func.js");
+const {add_task, update_task} = require("./task_func.js");
+
+function check_arg_fail(arg, type){
+    return ((arg === undefined) || (typeof arg !== type))
+}
 
 switch (command) {
     // Añadir nueva tarea, se pasa la tarea (string)
@@ -12,8 +15,9 @@ switch (command) {
     
     // Actualizar tarea por ID
         case "update":
-        //update_task()
-        break
+            if (check_arg_fail(args[0], "number") && check_arg_fail(args[1], "string")) {console.log("Error: ID y/o descripcion incorrectos")}
+            else {update_task(args[0],args[1])}
+            break
     
     // Borrar tarea por ID
     case "delete":
@@ -26,4 +30,4 @@ switch (command) {
     
     default:
         console.log("Comando incorrecto.")
-}   
+}
