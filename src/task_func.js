@@ -6,7 +6,6 @@ function find_next_id(task_obj_list){
     if (task_obj_list.length === 0) {id = 1}
     else {
         for (obj of task_obj_list){
-            console.log(id, obj.id);
             (id <= obj.id ? id = obj.id+1 : null)
         }
     }
@@ -21,6 +20,10 @@ function find_by_id(task_obj_list, id){
     return task_pos;
 }
 
+function format_date(date) {
+    return date.slice(0,10).split("-").reverse().join("-")
+}
+
 async function add_task(desc){
     const task_obj_list = await read_file();
     const id = find_next_id(task_obj_list);
@@ -29,7 +32,7 @@ async function add_task(desc){
     const task = {
         id,
         description: desc,
-        status: "todo",
+        status: "pendiente",
         createdAt: date_now,
         updatedAt: date_now
     };
@@ -50,15 +53,32 @@ async function update_task(id, desc){
 
 async function list_tasks(filter="none"){
     const task_obj_list = await read_file();
+    let filter_function
     //Filtro
     switch (filter) {
         case "none":
+            filter_function = (task) => true;
+            break;
+            
+        case "to-do":
+            filter_function = (task) => (task.status === "pendiente");
+            break;
+        
+        case "in-progress":
+            filter_function = (task) => (task.status === "en progreso");
+            break;
+        
+        case "done":
+            filter_function = (task) => (task.status === "realizado");
             break
     }
     //Print
     for (obj of task_obj_list) {
-        //console.log(obj)
-        console.log(`id: ${obj.id} | estado: ${obj.status} | ${obj.description} | Creado: ${obj.createdAt}`)
+        if (filter_function(obj)) {
+            const cdate_string = format_date(obj.createdAt);
+            const udate_string = format_date(obj.updatedAt);
+            console.log(`id: ${obj.id} | estado: ${obj.status} | '${obj.description}' | creado: ${cdate_string} | actualizado: ${udate_string}`)
+        } else {continue}
     }
 }
 

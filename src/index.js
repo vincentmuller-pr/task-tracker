@@ -26,7 +26,8 @@ switch (command) {
     
     // Mostrar lista de tareas, posible filtro
     case "list":
-        list_tasks();
+        let filter = (args[0] === undefined)? "none" : args[0]
+        list_tasks(filter);
         break
     
     default:
