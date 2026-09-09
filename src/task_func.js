@@ -6,7 +6,6 @@ function find_next_id(task_obj_list){
     if (task_obj_list.length === 0) {id = 1}
     else {
         for (obj of task_obj_list){
-            console.log(id, obj.id);
             (id <= obj.id ? id = obj.id+1 : null)
         }
     }
@@ -41,11 +40,30 @@ async function add_task(desc){
 async function update_task(id, desc){
     const task_obj_list = await read_file();
     const task_pos = find_by_id(task_obj_list, id);
-    if (task_pos === null) {console.log(`Error: No se encontro una tarea con ID: ${id}.`); return}
+    if (task_pos === null) {console.log(`Error: No se encontro una tarea con ID: ${id}.`); return;}
     task_obj_list[task_pos].description = desc;
     task_obj_list[task_pos].updatedAt = new Date();
     await save_file(task_obj_list)
     console.log(`La tarea con ID: ${id} ha sido actualizada con exito.`)
 }
 
-module.exports = {add_task, update_task}
+async function update_task_state(id, state){
+    const task_obj_list = await read_file();
+    const task_pos = find_by_id(task_obj_list, id);
+    if (task_pos === null) {console.log(`Error: No se encontro una tarea con ID: ${id}`); return;}
+    task_obj_list[task_pos].status = state;
+    task_obj_list[task_pos].updatedAt = new Date();
+    await save_file(task_obj_list);
+    console.log(`La tarea con ID: ${id} esta ahora ${state}`);
+}
+
+async function delete_task(id) {
+    const task_obj_list = await read_file();
+    const task_pos = find_by_id(task_obj_list, id);
+    if (task_pos === null) {console.log(`Error: No se encontro una tarea con ID: ${id}`); return;}
+    task_obj_list.splice(task_pos, 1);
+    await save_file(task_obj_list);
+    console.log(`La tarea con ID: ${id} ha sido eliminada`);
+}
+
+module.exports = {add_task, update_task, update_task_state, delete_task}
