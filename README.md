@@ -69,10 +69,10 @@ task-cli add "Buy groceries"
 task-cli list
 ```
 
-To remove the global link:
+To remove the global link, navigate to the project directory:
 
 ```bash
-npm unlink
+npm unlink -g task-tracker-cli
 ```
 
 ## Usage
