@@ -51,7 +51,7 @@ npm run task-cli -- delete 1
 Clone the repository and navigate to the project directory:
 
 ```bash
-git https://github.com/vincentmuller-pr/task-tracker.git
+git clone https://github.com/vincentmuller-pr/task-tracker.git
 cd ./task-tracker
 ```
 
@@ -107,7 +107,7 @@ task-cli mark-in-progress 1
 task-cli mark-done 1
 ```
 
-### Mark a task as todo
+### Mark a task as to-do
 
 ```bash
 task-cli mark-to-do 1
