@@ -88,7 +88,7 @@ async function list_tasks(filter="none"){
             break;
         
         case "done":
-            filter_function = (task) => (task.status === "realizado");
+            filter_function = (task) => (task.status === "realizada");
             break
     }
     //Print

@@ -1,6 +1,7 @@
+#!/usr/bin/env node
 const command = process.argv[2]
 const args = process.argv.slice(3)
-const {add_task, update_task, update_task_state, delete_task, list_tasks} = require("./task_func.js");
+const {add_task, update_task, update_task_state, delete_task, list_tasks} = require("./task_func.js")
 
 function check_arg_fail(arg, type){
     if (arg === undefined) {return true}
@@ -56,6 +57,30 @@ switch (command) {
         list_tasks(filter);
         break
     
+    case "--help":
+        console.log(`
+            Task Tracker CLI
+            
+            Uso:
+            task-cli <comando> [argumentos]
+            
+            Comandos:
+            add "<descripcion>" -> Añade una nueva tarea como pendiente
+            update <id> "<descripcion>" -> Actualiza la tarea con ID: <id>
+            delete <id> -> Elimina la tarea con ID: <id>
+            mark-to-do <id> -> Marca la tarea con ID: <id> como "pendiente"
+            mark-in-progress <id> -> Marca la tarea con ID: <id> como "en progreso"
+            mark-to-do <id> -> Marca la tarea con ID: <id> como "realizada"
+            list -> Muestra todas las tareas
+            list to-do -> Muestra todas las tareas pendientes
+            list in-progress -> Muestra todas las tareas en progreso
+            list done -> Muestra todas las tareas realizadas
+            
+            Opciones:
+            --help -> Muestra este mensaje
+        `)
+        break
+    
     default:
-        console.log("Comando incorrecto.")
+        console.log("Error: Comando incorrecto. utiliza --help para mostrar los comandos")
 }

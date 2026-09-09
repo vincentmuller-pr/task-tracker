@@ -1,8 +1,11 @@
 {
-  "name": "task-tracker",
+  "name": "task-tracker-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "task-cli": "./src/index.js"
+  },
   "scripts": {
     "task-cli": "node ./src/index.js"
   },
